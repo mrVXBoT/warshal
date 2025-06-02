@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الگوریتم وارشال - آموزشی</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- کتابخانه MathJax برای نمایش فرمول‌های ریاضی -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>الگوریتم وارشال</h1>
+        </header>
+
+        <div class="content">
+            <div class="info-panel">
+                <div class="algorithm-info">
+                    <h2>درباره الگوریتم وارشال</h2>
+                    <p>
+                        الگوریتم وارشال (Warshall) یک الگوریتم مهم در نظریه گراف است که برای محاسبه 
+                        بستار تعدی (Transitive Closure) یک گراف جهت‌دار استفاده می‌شود. این الگوریتم 
+                        مشخص می‌کند که از هر رأس به چه رأس‌های دیگری مسیر وجود دارد.
+                    </p>
+                    <p>
+                        اگر ماتریس مجاورت اولیه را با \(R^0\) نشان دهیم، بستار تعدی \(R^*\) ماتریسی است که:
+                    </p>
+                    <div class="math-formula">
+                        <p>
+                            \(R^*[i][j] = 1\) اگر و تنها اگر یک مسیر از رأس i به رأس j وجود داشته باشد.
+                        </p>
+                    </div>
+                    <p>پیچیدگی زمانی: <strong>O(n³)</strong> که n تعداد رئوس گراف است.</p>
+                </div>
+
+                <div class="algorithm-steps">
+                    <h2>فرمول‌های ریاضی الگوریتم</h2>
+                    <p>الگوریتم وارشال با استفاده از برنامه‌نویسی پویا محاسبه می‌شود:</p>
+                    <div class="math-formula">
+                        <p>\(R^0\): ماتریس مجاورت اولیه</p>
+                        <p>\(R^k[i][j] = R^{k-1}[i][j] \lor (R^{k-1}[i][k] \land R^{k-1}[k][j])\)</p>
+                        <p>\(R^n\): ماتریس بستار تعدی (نتیجه نهایی)</p>
+                    </div>
+                    <h2>مراحل الگوریتم</h2>
+                    <ol>
+                        <li>با ماتریس مجاورت اولیه \(R^0\) شروع کنید.</li>
+                        <li>برای هر رأس k به عنوان واسطه (از 0 تا n-1):</li>
+                        <li>برای هر جفت رأس (i,j)، بررسی کنید که آیا:</li>
+                        <li>از i به k و از k به j مسیری وجود دارد؟ اگر بله، مسیری از i به j وجود دارد.</li>
+                        <li>با استفاده از فرمول \(R^k[i][j] = R^{k-1}[i][j] \lor (R^{k-1}[i][k] \land R^{k-1}[k][j])\) ماتریس را به‌روز کنید.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="interactive-panel">
+                <div class="matrix-size-container">
+                    <h3>ابعاد ماتریس</h3>
+                    <div class="matrix-size-input">
+                        <label for="matrix-size">تعداد رئوس گراف:</label>
+                        <input type="number" id="matrix-size" min="2" max="10" value="3">
+                        <button id="create-matrix-btn" class="action-btn"><i class="fas fa-table"></i> ساخت ماتریس</button>
+                    </div>
+                </div>
+
+                <div class="matrix-container">
+                    <h3>ماتریس مجاورت ورودی \(R^0\)</h3>
+                    <div id="input-matrix"></div>
+                    <div class="matrix-tip">
+                        <p>راهنما: 1 نشان دهنده وجود یال از رأس سطر به رأس ستون است، و 0 نشان دهنده عدم وجود یال.</p>
+                    </div>
+                    <button id="run-algorithm-btn" class="action-btn"><i class="fas fa-play"></i> اجرای الگوریتم وارشال</button>
+                </div>
+
+                <div id="visualization-container" class="hidden">
+                    <h3><i class="fas fa-chart-line"></i> شبیه‌سازی مراحل</h3>
+                    <div class="visualization-controls">
+                        <button id="prev-step-btn" class="control-btn"><i class="fas fa-step-backward"></i> مرحله قبل</button>
+                        <span id="step-indicator">مرحله 0/0</span>
+                        <button id="next-step-btn" class="control-btn">مرحله بعد <i class="fas fa-step-forward"></i></button>
+                    </div>
+                    <div class="visualization-content">
+                        <div id="step-description" class="step-description"></div>
+                        <div id="math-description" class="math-description"></div>
+                        <div class="current-formula">
+                            <p>در این مرحله برای هر جفت رأس (i,j)، محاسبه می‌کنیم: </p>
+                            <p id="current-formula" class="formula"></p>
+                        </div>
+                        <div id="visualization-matrix"></div>
+                    </div>
+                </div>
+
+                <div id="result-container" class="hidden">
+                    <h3><i class="fas fa-check-circle"></i> نتیجه نهایی - ماتریس بستار تعدی \(R^*\)</h3>
+                    <div id="result-matrix"></div>
+                    <div class="result-explanation">
+                        <p>ماتریس نهایی بستار تعدی نشان می‌دهد که از هر رأس (سطر) به کدام رئوس (ستون‌ها) مسیر وجود دارد.</p>
+                        <p>اگر \(R^*[i][j] = 1\) باشد، یعنی یک مسیر (مستقیم یا غیرمستقیم) از رأس i به رأس j وجود دارد.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><i class="fas fa-code"></i>VX</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> 
