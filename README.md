@@ -48,8 +48,8 @@ The implementation includes:
 ### Setup Instructions
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/warshall-algorithm.git
-   cd warshall-algorithm
+   git clone https://github.com/mrVXBoT/warshal.git
+   cd warshall
    ```
 
 2. Create and activate a virtual environment (recommended):
@@ -120,8 +120,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 If you use this implementation in your research or teaching, please cite:
 ```
 @software{warshall_algorithm_implementation,
-  author = {Your Name},
+  author = {VX},
   title = {Interactive Educational Implementation of the Warshall Algorithm},
-  year = {2023},
-  url = {https://github.com/yourusername/warshall-algorithm}
+  year = {2025},
+  url = {https://github.com/mrVXBoT/warshal.git}
 }
